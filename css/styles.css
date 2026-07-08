@@ -409,7 +409,7 @@ body {
     font-weight:bold;
 }
 
-/* -------------------------------PRODUCT TABLE---------------------------------------- */
+/* ------------------------------- PRODUCT TABLE ---------------------------------------- */
 
 .product-table{
     margin-top:60px;
@@ -476,13 +476,164 @@ body {
     color:#ffcf6b;
     font-weight:bold;
 }
+.order-divider{
+    margin:80px auto;
+    text-align:center;
+}
 
+.order-divider hr{
+    width:180px;
+    margin:10px auto;
+    border:none;
+    border-top:2px solid rgba(255,255,255,.15);
+}
+
+.order-divider h3{
+    font-family:'Special Elite', monospace;
+    font-size:30px;
+    color:#fff;
+    letter-spacing:3px;
+    font-weight:400;
+}
+
+/* ----------------------------------- NEW ORDER-------------------------------------------- */
+.order-wrapper h2{
+    color:white;
+    font-size:35px;
+    text-align:center;
+}
+
+.order-wrapper p{
+    color:#bdbdbd;
+    text-align:center;
+    margin:10px 0 30px;
+}
+
+.order-type{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.type-card{
+    background:#25282c;
+    color:white;
+    padding:20px;
+    border-radius:15px;
+    cursor:pointer;
+    text-align:center;
+    transition:.3s;
+    font-weight:700;
+}
+
+.type-card:hover{
+    transform:translateY(-4px);
+}
+
+.type-card.active{
+    background:#5b1717;
+    border:2px solid #ffcf6b;
+}
+
+.order-content{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.product-counter{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#25282c;
+    padding:18px 15px;
+    border-radius:12px;
+    gap:12px;
+}
+
+.product-counter span:first-child{
+    color:white;
+    font-size:15px;
+    font-weight:600;
+    text-align:center;
+}
+
+.counter{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.counter button{
+    width:35px;
+    height:35px;
+    border:none;
+    border-radius:50%;
+    background:#5b1717;
+    color:white;
+    cursor:pointer;
+}
+
+.counter span{
+    width:25px;
+    text-align:center;
+    color:white;
+}
+
+.bundle-box{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.bundle-box select{
+    padding:15px;
+    background:#25282c;
+    color:white;
+    border:none;
+    border-radius:12px;
+    width:100%;
+    box-sizing:border-box;
+
+}
+
+.fade{
+    animation:fade .3s ease;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:768px){
+
+    .order-type{
+        grid-template-columns:1fr;
+    }
+
+}
 
 /* -----------------------------------ORDER-------------------------------------------- */
 
 .order{
-    width:95%;
-    margin:80px auto;
+    width:100%;
+    margin:100px auto 0;
+}
+
+.order-wrapper{
+    background:#1a1d20;
+    border-radius:35px;
+    padding:40px 30px 40px;
 }
 
 .order-container{
@@ -537,8 +688,8 @@ body {
 }
 
 .input-box{
-    display:flex;
-    flex-direction:column;
+    width:100%;
+    margin-bottom:18px;
 }
 
 .input-box label{
@@ -554,13 +705,13 @@ body {
     background:#2a2d30;
     color:white;
     font-size:15px;
+    width:100%;
+    display:block;
+    box-sizing:border-box;
 }
 
 
-/* ===========================
-   CHECKBOX + JUMLAH
-=========================== */
-
+/* CHECKBOX + JUMLAH */
 .checkbox-group{
     display:flex;
     flex-direction:column;
@@ -609,20 +760,21 @@ body {
 
 
 /* BUTTON */
-.order-form-box button{
-    margin-top:10px;
-    padding:15px;
+.order-btn{
+    width:100%;
+    margin-top:25px;
+    padding:16px;
     border:none;
-    border-radius:50px;
+    border-radius:12px;
     background:#5b1717;
-    color:white;
+    color:#fff;
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
     transition:.3s;
 }
 
-.order-form-box button:hover{
+.order-btn:hover{
     background:#7a2323;
 }
 
@@ -639,6 +791,17 @@ body {
     }
 }
 
+@media(max-width:900px){
+    .order-content{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .order-content{
+        grid-template-columns:1fr;
+    }
+}
 
 /* -----------------------------------MAP-------------------------------------------- */
 

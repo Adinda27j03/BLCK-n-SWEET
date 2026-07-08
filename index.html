@@ -13,9 +13,6 @@
     <!-- Font Awesome -->
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-
-
-
 </head>
 
 <body id="page-top">
@@ -291,159 +288,412 @@
                                 </tr>
                                 </tbody>
                             </table>
+
+                            <section class="order-divider">
+                                <hr>
+                                <h3>Ready to Order?</h3>
+                                <hr>
+                            </section>
             
                 <!-- Product Order -->
                 <section class="order" id="order">
 
-                    <div class="order-container">
+                    <div class="order-wrapper">
 
-                            <!-- LEFT -->
-                            <div class="order-image">
+                        <h2>Order Cookies</h2>
+                        <p>Pilih Cookies Favorite Kamu.</p>
 
-                                <img src="img/Cookies.jpg" alt="Cookies">
+                        <!----------- ORDER TYPE ----------->
 
+                        <div class="order-type">
+
+                            <div class="type-card active" onclick="showOrder('single',this)">
+                                🍪 Order Satuan
                             </div>
 
-
-                            <!-- RIGHT -->
-                            <div class="order-form-box">
-                                <h2>Order Cookies</h2>
-                                <p>
-                                    Lengkapi formulir berikut untuk melakukan pemesanan cookies favoritmu.
-                                </p>
-                                <form id="waForm">
-
-                            <!-- Nama -->
-                            <div class="input-box">
-                                <label>Nama Lengkap</label>
-                                <input type="text" id="nama" placeholder="Masukkan Nama">
+                            <div class="type-card" onclick="showOrder('stuffed',this)">
+                                🎁 Bundling Stuffed
                             </div>
 
-                            <!-- WhatsApp -->
-                            <div class="input-box">
-                                <label>Nomor WhatsApp</label>
-                                <input type="text" id="nomor" placeholder="08xxxxxxxxxx">
+                            <div class="type-card" onclick="showOrder('signature',this)">
+                                🎁 Bundling Signature
                             </div>
 
-                            <!-- Checkbox -->
-                            <div class="input-box">
-                                <label>Pilih Varian Cookies</label>
-
-                                <div class="checkbox-group">
-
-                                    <div class="cookie-item">
-                                        <label>
-                                            <input type="checkbox" value="Black Velvet">
-                                            <span>Black Velvet</span>
-                                        </label>
-                                        <input type="number" class="qty-input" min="1" placeholder="Jumlah">
-                                    </div>
-
-                                    <div class="cookie-item">
-                                        <label>
-                                            <input type="checkbox" value="Choco Chips">
-                                            <span>Choco Chips</span>
-                                        </label>
-                                        <input type="number" class="qty-input" min="1" placeholder="Jumlah">
-                                    </div>
-
-                                    <div class="cookie-item">
-                                        <label>
-                                            <input type="checkbox" value="Matcha">
-                                            <span>Matcha</span>
-                                        </label>
-                                        <input type="number" class="qty-input" min="1" placeholder="Jumlah">
-                                    </div>
-
-                                    <div class="cookie-item">
-                                        <label>
-                                            <input type="checkbox" value="Red Velvet">
-                                            <span>Red Velvet</span>
-                                        </label>
-                                        <input type="number" class="qty-input" min="1" placeholder="Jumlah">
-                                    </div>
-
-                                    <div class="cookie-item">
-                                        <label>
-                                            <input type="checkbox" value="Vanilla">
-                                            <span>Vanilla</span>
-                                        </label>
-                                        <input type="number" class="qty-input" min="1" placeholder="Jumlah">
-                                    </div>
-
-                                    <div class="cookie-item">
-                                        <label>
-                                            <input type="checkbox" value="Double Choco">
-                                            <span>Double Choco</span>
-                                        </label>
-                                        <input type="number" class="qty-input" min="1" placeholder="Jumlah">
-                                    </div>
-
-                                </div>
+                            <div class="type-card" onclick="showOrder('original',this)">
+                                🎁 Bundling Original
                             </div>
-                    
-                            <button type="button" onclick="kirimWA()">
-                                Pesan Sekarang
-                            </button>
-                        </form>
+
+                        </div>
+
+                        <!----------- NAMA CUSTOMER ----------->
+
+                        <div class="input-box">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="nama">
+                        </div>
+
+                        <div class="input-box">
+                            <label>Nomor WhatsApp</label>
+                            <input type="text" id="nomor">
+                        </div>
+
+                        <!----------- BUTTON ORDER ----------->
+                        <div id="orderContent"></div>
+                        <button class="order-btn" onclick="kirimWA()">
+                            Pesan Sekarang
+                        </button>
+
                     </div>
-            </div>
-    </section>
+
+                </section>
 
                             <script>
-                            function kirimWA(){
+                            let currentType = "single";
 
-                            let nama = document.getElementById("nama").value;
-                            let nomor = document.getElementById("nomor").value;
+                            let qty = {
+                                blackVelvet:0,
+                                strawberry:0,
+                                lemon:0,
+                                brown:0,
+                                choco:0,
+                                sesame:0
+                            };
 
-                            if(nama=="" || nomor==""){
-                                alert("Silakan Lengkapi Nama dan Nomor WhatsApp <3");
-                                return;
-                            }
-
-                            let pesanan = "";
-
-                            let cookieItems = document.querySelectorAll(".cookie-item");
-
-                            cookieItems.forEach(function(item){
-
-                                let checkbox = item.querySelector('input[type="checkbox"]');
-                                let qty = item.querySelector(".qty-input").value;
-
-                                if(checkbox.checked){
-
-                                    if(qty=="" || qty<=0){
-                                        qty = 1;
-                                    }
-
-                                    pesanan += `- ${checkbox.value} (${qty} Pcs)\n`;
-                                }
-
+                            document.addEventListener("DOMContentLoaded",()=>{
+                                showSingle();
                             });
 
-                            if(pesanan==""){
-                                alert("Hi Dear, Jangan Lupa Pilih Minimal Satu Varian Cookies.");
-                                return;
+                            function showOrder(type,element){
+
+                                currentType = type;
+
+                                document.querySelectorAll(".type-card").forEach(card=>{
+                                    card.classList.remove("active");
+                                });
+
+                                element.classList.add("active");
+
+                                if(type==="single"){
+                                    showSingle();
+                                }
+
+                                if(type==="stuffed"){
+                                    showStuffed();
+                                }
+
+                                if(type==="signature"){
+                                    showSignature();
+                                }
+
+                                if(type==="original"){
+                                    showOriginal();
+                                }
+
                             }
 
-                            let pesan =
-                            `Haloo Admin BLCK N SWEET,
+                            function showSingle(){
 
-                            Saya ingin memesan cookies.
+                            document.getElementById("orderContent").innerHTML=`
 
-                            Nama : ${nama}
-                            No. WA : ${nomor}
+                            <div class="order-content fade">
 
-                            Pesanan :
-                            ${pesanan}
+                            <div class="product-counter">
+                            <span>Black Velvet</span>
 
-                            Terima kasih.`;
+                            <div class="counter">
+                            <button onclick="changeQty('blackVelvet',-1)">-</button>
+                            <span id="blackVelvet">0</span>
+                            <button onclick="changeQty('blackVelvet',1)">+</button>
+                            </div>
 
-                            let url = "https://wa.me/6281221543368?text=" + encodeURIComponent(pesan);
+                            </div>
 
-                            window.open(url,"_blank");
+                            <div class="product-counter">
+                            <span>Strawberry Cheese</span>
+
+                            <div class="counter">
+                            <button onclick="changeQty('strawberry',-1)">-</button>
+                            <span id="strawberry">0</span>
+                            <button onclick="changeQty('strawberry',1)">+</button>
+                            </div>
+
+                            </div>
+
+                            <div class="product-counter">
+                            <span>Lemon Zest</span>
+
+                            <div class="counter">
+                            <button onclick="changeQty('lemon',-1)">-</button>
+                            <span id="lemon">0</span>
+                            <button onclick="changeQty('lemon',1)">+</button>
+                            </div>
+
+                            </div>
+
+                            <div class="product-counter">
+                            <span>Brown Spice</span>
+
+                            <div class="counter">
+                            <button onclick="changeQty('brown',-1)">-</button>
+                            <span id="brown">0</span>
+                            <button onclick="changeQty('brown',1)">+</button>
+                            </div>
+
+                            </div>
+
+                            <div class="product-counter">
+                            <span>Choco Chunk</span>
+
+                            <div class="counter">
+                            <button onclick="changeQty('choco',-1)">-</button>
+                            <span id="choco">0</span>
+                            <button onclick="changeQty('choco',1)">+</button>
+                            </div>
+
+                            </div>
+
+                            <div class="product-counter">
+                            <span>Black Sesame</span>
+
+                            <div class="counter">
+                            <button onclick="changeQty('sesame',-1)">-</button>
+                            <span id="sesame">0</span>
+                            <button onclick="changeQty('sesame',1)">+</button>
+                            </div>
+
+                            </div>
+
+                            </div>
+
+                            `;
 
                             }
+
+                            function showStuffed(){
+
+                            document.getElementById("orderContent").innerHTML=`
+
+                            <div class="bundle-box fade">
+
+                            <select id="b1">
+                                <option value="">-- Pilih Varian --</option>
+                                <option value="Black Velvet">Black Velvet</option>
+                                <option value="Strawberry Cheese">Strawberry Cheese</option>
+                            </select>
+
+                            <select id="b2">
+                                <option value="">-- Pilih Varian --</option>
+                                <option value="Black Velvet">Black Velvet</option>
+                                <option value="Strawberry Cheese">Strawberry Cheese</option>
+                            </select>
+
+                            <select id="b3">
+                                <option value="">-- Pilih Varian --</option>
+                                <option value="Black Velvet">Black Velvet</option>
+                                <option value="Strawberry Cheese">Strawberry Cheese</option>
+                            </select>
+
+                            </div>
+
+                            `;
+
+                            }
+
+                            function showSignature(){
+
+                            document.getElementById("orderContent").innerHTML=`
+
+                            <div class="bundle-box fade">
+
+                            <select id="s1">
+                                <option value="">-- Pilih Varian --</option>
+                                <option value="Lemon Zest">Lemon Zest</option>
+                                <option value="Brown Spice">Brown Spice</option>
+                            </select>
+
+                            <select id="s2">
+                                <option value="">-- Pilih Varian --</option>
+                                <option value="Lemon Zest">Lemon Zest</option>
+                                <option value="Brown Spice">Brown Spice</option>
+                            </select>
+
+                            <select id="s3">
+                                <option value="">-- Pilih Varian --</option>
+                                <option value="Lemon Zest">Lemon Zest</option>
+                                <option value="Brown Spice">Brown Spice</option>
+                            </select>
+
+                            </div>
+
+                            `;
+
+                            }
+
+                            function showOriginal(){
+
+                            document.getElementById("orderContent").innerHTML=`
+
+                            <div class="bundle-box fade">
+
+                            <select id="o1">
+                                <option value="">-- Pilih Varian --</option>
+                                <option value="Choco Chunk">Choco Chunk</option>
+                                <option value="Black Sesame">Black Sesame</option>
+                            </select>
+
+                            <select id="o2">
+                                <option value="">-- Pilih Varian --</option>
+                                <option value="Choco Chunk">Choco Chunk</option>
+                                <option value="Black Sesame">Black Sesame</option>
+                            </select>
+
+                            <select id="o3">
+                                <option value="">-- Pilih Varian --</option>
+                                <option value="Choco Chunk">Choco Chunk</option>
+                                <option value="Black Sesame">Black Sesame</option>
+                            </select>
+
+                            </div>
+
+                            `;
+
+                            }
+
+                            function changeQty(item,val){
+
+                            qty[item]+=val;
+
+                            if(qty[item]<0){
+                            qty[item]=0;
+                            }
+
+                            document.getElementById(item).innerText=qty[item];
+
+                            }
+
+                                        function kirimWA(){
+
+                                        let nama = document.getElementById("nama").value.trim();
+                                        let nomor = document.getElementById("nomor").value.trim();
+
+                                        // Validasi Nama
+                                        if(nama === ""){
+                                            alert("Nama Lengkap Belum Diisi!");
+                                            document.getElementById("nama").focus();
+                                            return;
+                                        }
+
+                                        // Validasi Nomor WA
+                                        if(nomor === ""){
+                                            alert("Nomor WhatsApp Belum Diisi!");
+                                            document.getElementById("nomor").focus();
+                                            return;
+                                        }
+
+                                        let pesan = "";
+                                        if(currentType === "single"){
+                                            if(currentType==="single"){
+
+                                            let adaPesanan = false;
+                                            pesan="ORDER SATUAN\n\n";
+
+                                            for(let key in qty){
+                                                if(qty[key]>0){
+                                                    adaPesanan = true;
+                                                    pesan+=key+" : "+qty[key]+" pcs\n";
+                                                }
+                                            }
+
+                                            if(!adaPesanan){
+                                                alert("Silakan Pilih Minimal 1 Varian Cookies.");
+                                                return;
+                                            }
+                                        }
+
+                                        }
+                                        else{
+
+                                        if(currentType=="stuffed"){
+                                            if(
+                                                b1.value=="" ||
+                                                b2.value=="" ||
+                                                b3.value==""
+                                            ){
+                                                alert("Silakan Pilih Semua Varian Stuffed.");
+                                                return;
+                                            }
+
+                                        }
+
+                                        if(currentType=="signature"){
+                                            if(
+                                                s1.value=="" ||
+                                                s2.value=="" ||
+                                                s3.value==""
+                                            ){
+                                                alert("Silakan Pilih Semua Varian Signature.");
+                                                return;
+                                            }
+
+                                        }
+
+                                        if(currentType=="original"){
+                                            if(
+                                                o1.value=="" ||
+                                                o2.value=="" ||
+                                                o3.value==""
+                                            ){
+                                                alert("Silakan Pilih Semua Varian Original.");
+                                                return;
+                                            }
+
+                                        }
+
+                                        else{
+
+                                        pesan = "ORDER BUNDLING" + currentType.toUpperCase() + "\n\n";
+
+                                        if(currentType==="stuffed"){
+                                            pesan +=
+                                            "Varian 1 : " + document.getElementById("b1").value + "\n" +
+                                            "Varian 2 : " + document.getElementById("b2").value + "\n" +
+                                            "Varian 3 : " + document.getElementById("b3").value;
+                                        }
+
+                                        if(currentType==="signature"){
+                                            pesan +=
+                                            "Varian 1 : " + document.getElementById("s1").value + "\n" +
+                                            "Varian 2 : " + document.getElementById("s2").value + "\n" +
+                                            "Varian 3 : " + document.getElementById("s3").value;
+                                        }
+
+                                        if(currentType==="original"){
+                                            pesan +=
+                                            "Varian 1 : " + document.getElementById("o1").value + "\n" +
+                                            "Varian 2 : " + document.getElementById("o2").value + "\n" +
+                                            "Varian 3 : " + document.getElementById("o3").value;
+                                        }
+                                    }
+                                }
+
+                                        let text =
+                                        "👋 Hai Admin BLCK n SWEET,\n\n"+
+                                        "Berikut Pesanan Saya.\n\n"+
+                                        "====================\n"+
+                                        "👤 Nama : " + nama + "\n"+
+                                        "📱 No WA : " + nomor + "\n"+
+                                        "====================\n\n"+
+                                        pesan+
+                                        "\n\nTerima kasih 🙏";
+
+                                        let url =
+                                        "https://wa.me/6281221543368?text=" +
+                                        encodeURIComponent(text);
+
+                                        window.open(url);
+
+                                    }
+
                         </script>
                     </div> 
                 </div> <!-- order-container -->
